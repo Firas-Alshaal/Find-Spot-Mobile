@@ -40,7 +40,7 @@ class ItemDescription extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Description: ${lostItem.name}',
+                  'Description: ${lostItem.description}',
                   maxLines: 1,
                   style: textTheme.bodyMedium!.copyWith(
                       overflow: TextOverflow.ellipsis,
@@ -50,7 +50,7 @@ class ItemDescription extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Location: ${lostItem.street}',
+                  'Location: ${lostItem.city} , ${lostItem.street}',
                   maxLines: 1,
                   style: textTheme.labelSmall!.copyWith(
                       color: colorScheme.onSurfaceVariant,

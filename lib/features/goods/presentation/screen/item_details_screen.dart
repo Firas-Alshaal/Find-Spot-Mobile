@@ -84,7 +84,7 @@ class ItemDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Location: ${lostItem.street}',
+                    'Location: ${lostItem.city} , ${lostItem.street}',
                     style: textTheme.titleLarge!.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),

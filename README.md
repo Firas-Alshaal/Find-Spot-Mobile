@@ -15,7 +15,7 @@ Find Spot is A user-friendly app facilitating the recovery of lost items by enab
 * Use your [Base Url Api](https://mixedanalytics.com/knowledge-base/api-urls-explained/#what)
 
 
-<p align="center"><img src="https://github.com/flutter/website/blob/main/src/assets/images/docs/homepage/reflectly-hero-600px.png?raw=true" alt="Reflectly hero image"></p>
+<p align="center"><img src="https://github.com/Firas-Alshaal/Find-Spot-Mobile/blob/main/screen-app.png?raw=true" alt="Reflectly hero image"></p>
 
 
 # Documentation
@@ -59,6 +59,22 @@ Find Spot is A user-friendly app facilitating the recovery of lost items by enab
 * **Step-by-Step Guide:** Navigate through each feature effortlessly with our simple step-by-step instructions, enhanced with helpful visuals for seamless usability.
 
 * **Tips and Tricks:** Maximize your success in reuniting lost items with their owners by providing clear descriptions, utilizing location features accurately, and promptly responding to inquiries.
+
+
+## Using Bloc Architecture
+
+* **Introduction to Bloc Architecture:** Our app employs the Bloc (Business Logic Component) architecture pattern to ensure clean code and a structured architecture. Different aspects of the app, such as item management, authentication, and map interactions, are handled by separate Blocs, each managing its own set of events and states.
+
+* **Bloc Organization:** We've organized our codebase into separate Blocs for different functionalities, promoting a clear separation of concerns. This approach facilitates easier maintenance and scalability as each Bloc encapsulates its specific business logic.
+
+* **State Management with Blocs:** Blocs serve as a central hub for managing application state. They emit streams of states in response to events, allowing for seamless UI updates throughout the app.
+
+* **Event Handling:** Events are the triggers for state changes within our app's architecture. When an event occurs, the corresponding Bloc processes it, updating the state as necessary and triggering UI changes.
+
+* **Clean Code Practices:** Our codebase adheres to clean code principles, ensuring readability and maintainability. By structuring our code into modular Blocs, we promote code reusability and make it easier to understand and extend.
+
+* **Scalability and Maintenance:** With a well-organized architecture and adherence to clean code practices, our app is primed for scalability and long-term maintenance. As the app grows, adding new features or making changes becomes more manageable thanks to the structured Bloc architecture.
+
 
 ## Privacy and Security
 
