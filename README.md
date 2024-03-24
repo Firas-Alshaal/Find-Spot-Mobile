@@ -1,10 +1,10 @@
-<h1 style="display: flex; align-items: center; justify-content: center">
+<h1 align="center">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://storage.googleapis.com/cms-storage-bucket/6e19fee6b47b36ca613f.png">
       <img alt="Find Spot"
-     height="150" src="https://github.com/Firas-Alshaal/Find-Spot-Mobile/blob/main/assets/logo/logo.png?raw=true">
+     height="200" src="https://github.com/Firas-Alshaal/Find-Spot-Mobile/blob/main/assets/logo/logo.png?raw=true">
     </picture>
-    <div style="margin-left: 40px; font-family: Arial, sans-serif; font-size: 50px; font-weight: bold; color: #333;">Find Spot</div>
+    <p>Find Spot</p>
   </h1>
 
 Find Spot is A user-friendly app facilitating the recovery of lost items by enabling users to report lost belongings and search through listings. Utilizing geolocation, it provides real-time updates on item locations, fostering a seamless retrieval process. Connects users within a community to reunite lost possessions with their rightful owners efficiently.
