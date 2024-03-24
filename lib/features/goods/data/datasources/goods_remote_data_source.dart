@@ -123,7 +123,7 @@ class GoodsRemoteDataSourceImpl extends Api implements GoodsRemoteDataSource {
     };
 
     final response = await client
-        .post(Uri.parse('https://fitoapp.de/Anapog/anapog/api/getAddress'),
+        .post(Uri.parse('BASE URL API'),
             body: jsonEncode(body), headers: await getHeadersMap())
         .timeout(const Duration(seconds: 60));
 
