@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lost_find_tracker/core/network/authrization.dart';
-import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/core/strings/failures.dart';
+import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/itemType.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/lostItem.dart';
 import 'package:lost_find_tracker/features/goods/presentation/bloc/goods/goods_bloc.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/app_bar_widget.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/empty_list.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/error_snackbar.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/lost_item.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/app_bar_widget.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/empty_list.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/dialogWidget/error_snackbar.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/itemWidget/lost_item.dart';
 import 'package:lost_find_tracker/injection_container.dart' as di;
 
 class LostItemsScreen extends StatelessWidget {
@@ -37,7 +37,9 @@ class LostItemsScreen extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is GetLostItemsSuccessState) {
-              list = state.items;
+              list = state.items.reversed
+                  .where((element) => element.userId == state.userId)
+                  .toList();
               return list.isEmpty
                   ? const EmptyListWidget()
                   : Padding(

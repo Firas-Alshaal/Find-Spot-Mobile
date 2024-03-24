@@ -5,7 +5,7 @@ import 'package:lost_find_tracker/core/utils/assets.dart';
 import 'package:lost_find_tracker/core/utils/theme_color.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/map.dart';
 import 'package:lost_find_tracker/features/goods/presentation/bloc/map/map_bloc.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/error_snackbar.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/dialogWidget/error_snackbar.dart';
 
 class PutLocationScreen extends StatelessWidget {
   PutLocationScreen({Key? key}) : super(key: key);

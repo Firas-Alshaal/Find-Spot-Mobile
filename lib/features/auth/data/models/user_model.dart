@@ -6,10 +6,12 @@ class UserModel extends User {
     required String password,
     String? phoneNumber,
     String? name,
+    String? id,
   }) : super(
           email: email,
           password: password,
           name: name,
+          id: id,
           phoneNumber: phoneNumber,
         );
 
@@ -18,6 +20,7 @@ class UserModel extends User {
       email: json['email'],
       password: json['password'],
       name: json['name'],
+      id: json['id'],
       phoneNumber: json['phone_number'],
     );
   }
@@ -28,6 +31,7 @@ class UserModel extends User {
       'password': password,
       'name': name,
       'phone_number': phoneNumber,
+      'id': id,
     };
   }
 }

@@ -3,12 +3,15 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lost_find_tracker/core/error/failures.dart';
 import 'package:lost_find_tracker/core/strings/failures.dart';
+import 'package:lost_find_tracker/features/auth/data/datasources/auth_local_data_source.dart';
+import 'package:lost_find_tracker/features/auth/data/models/user_model.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/itemType.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/lostItem.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/search.dart';
 import 'package:lost_find_tracker/features/goods/domain/usecases/getLostItems.dart';
 import 'package:lost_find_tracker/features/goods/domain/usecases/lostItem.dart';
 import 'package:lost_find_tracker/features/goods/domain/usecases/searchItem.dart';
+import 'package:lost_find_tracker/injection_container.dart' as di;
 
 part 'goods_event.dart';
 
@@ -19,6 +22,8 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
 
   final GetLostItemUseCase getLostItemUseCase;
   final SearchItemUseCase searchItemUseCase;
+
+  UserModel? userId;
 
   GoodsBloc({
     required this.lostItemUseCase,
@@ -34,6 +39,8 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
         emit(_mapFailureOrAddGoodsToState(failureOrAddLostItem));
       } else if (event is GetLostItemsEvent) {
         emit(LoadingGoodsState());
+
+        userId = await di.sl<AuthLocalDataSource>().loadUser();
 
         final failureOrGetFoundItems = await getLostItemUseCase(event.itemType);
         emit(_mapFailureOrGetLostItemsToState(failureOrGetFoundItems));
@@ -59,7 +66,8 @@ class GoodsBloc extends Bloc<GoodsEvent, GoodsState> {
       Either<Failure, List<LostItem>> either) {
     return either.fold(
       (failure) => ErrorGoodsState(message: _mapFailureToMessage(failure)),
-      (data) => GetLostItemsSuccessState(items: data),
+      (data) => GetLostItemsSuccessState(
+          items: data, userId: userId == null ? null : userId!.id),
     );
   }
 

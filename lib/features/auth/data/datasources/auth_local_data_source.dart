@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:lost_find_tracker/core/utils/constant.dart';
+import 'package:lost_find_tracker/features/auth/data/models/user_model.dart';
 import 'package:lost_find_tracker/features/goods/data/models/category_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +16,10 @@ abstract class AuthLocalDataSource {
   Future<Unit> saveCategories(List<CategoryModel> categories);
 
   Future<List<CategoryModel>> loadCategories();
+
+  Future<Unit> saveUser(UserModel userModel);
+
+  Future<UserModel> loadUser();
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
@@ -36,6 +41,20 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     } else {
       throw EmptyCacheException();
     }
+  }
+
+  @override
+  Future<Unit> saveUser(UserModel userModel) {
+    final userModelString = json.encode(userModel.toJson());
+    sharedPreferences.setString(Constants.User, userModelString);
+
+    return Future.value(unit);
+  }
+
+  @override
+  Future<UserModel> loadUser() {
+    final categoryString = sharedPreferences.getString(Constants.User);
+    return Future.value(UserModel.fromJson(json.decode(categoryString!)));
   }
 
   @override

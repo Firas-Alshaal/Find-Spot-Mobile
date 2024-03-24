@@ -16,6 +16,15 @@ class AuthSuccessState extends AuthState {
   List<Object> get props => [];
 }
 
+class EditAuthSuccessState extends AuthState {
+  final UserModel userModel;
+
+  const EditAuthSuccessState({required this.userModel});
+
+  @override
+  List<Object> get props => [userModel];
+}
+
 class ErrorAuthState extends AuthState {
   final String message;
 

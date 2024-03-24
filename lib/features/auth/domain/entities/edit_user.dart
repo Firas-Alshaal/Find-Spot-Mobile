@@ -1,11 +1,11 @@
 // import 'package:equatable/equatable.dart';
 //
-// class Register with EquatableMixin {
-//   const Register({
+// class EditUser with EquatableMixin {
+//   const EditUser({
 //     required this.userName,
 //     required this.email,
 //     required this.password,
-//     required this.confirmPassword,
+//     required this.userId,
 //     required this.phone,
 //   });
 //
@@ -13,7 +13,7 @@
 //   final String phone;
 //   final String password;
 //   final String email;
-//   final String confirmPassword;
+//   final String userId;
 //
 //   @override
 //   List<Object?> get props => [
@@ -21,6 +21,6 @@
 //         phone,
 //         password,
 //         email,
-//         confirmPassword,
+//         userId,
 //       ];
 // }

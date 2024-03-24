@@ -17,11 +17,13 @@ class Constants {
   static const String SearchScreen = '/Search';
   static const String ItemDetailsScreen = '/ItemDetails';
   static const String PutLocationScreen = '/PutLocation';
+  static const String EditUserScreen = '/EditUser';
 
   //APIs
-  static const String URL = 'ADD_BASE_URL';
+  static const String URL = 'BASE_URL/';
   static const String LOGIN = 'users/login';
   static const String Register = 'users/register';
+  static const String EditUser = 'users/edit';
   static const String AddLostItem = 'items/lost';
   static const String AddFoundItem = 'items/found';
   static const String GetLostItem = 'items';
@@ -30,6 +32,7 @@ class Constants {
 
   // Shared Key
   static const String TOKEN = 'token';
+  static const String User = 'user';
   static const String OnBoarding = 'OnBoarding';
   static const String LostItems = 'LostItems';
   static const String Categories = 'Categories';

@@ -1,19 +1,22 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:lost_find_tracker/core/error/exceptions.dart';
 import 'package:lost_find_tracker/core/network/headers.dart';
 import 'package:lost_find_tracker/core/utils/constant.dart';
-import 'package:lost_find_tracker/core/error/exceptions.dart';
+import 'package:lost_find_tracker/features/auth/data/models/auth_model.dart';
+import 'package:lost_find_tracker/features/auth/data/models/user_model.dart';
 import 'package:lost_find_tracker/features/auth/domain/entities/user.dart';
-import 'package:lost_find_tracker/features/auth/domain/entities/register.dart';
 import 'package:lost_find_tracker/features/goods/data/models/category_model.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<String> login(User loginData);
+  Future<AuthUser> login(User loginData);
 
-  Future<String> register(Register registerData);
+  Future<AuthUser> register(User registerData);
 
   Future<List<CategoryModel>> categories();
+
+  Future<UserModel> editUser(User editUser);
 }
 
 class AuthRemoteDataSourceImpl extends Api implements AuthRemoteDataSource {
@@ -22,7 +25,7 @@ class AuthRemoteDataSourceImpl extends Api implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<String> login(User loginData) async {
+  Future<AuthUser> login(User loginData) async {
     final body = {
       "email": loginData.email,
       "password": loginData.password,
@@ -36,7 +39,9 @@ class AuthRemoteDataSourceImpl extends Api implements AuthRemoteDataSource {
     var responseJson = json.decode(response.body);
 
     if (response.statusCode == 201) {
-      return Future.value(responseJson['accessToken']);
+      AuthUser userModel = AuthUser.fromJson(responseJson);
+
+      return Future.value(userModel);
     } else if (response.statusCode == 400) {
       throw ValidateException(responseJson['message'][0]);
     } else {
@@ -45,13 +50,13 @@ class AuthRemoteDataSourceImpl extends Api implements AuthRemoteDataSource {
   }
 
   @override
-  Future<String> register(Register registerData) async {
+  Future<AuthUser> register(User registerData) async {
     final body = {
       "email": registerData.email,
       "password": registerData.password,
-      "passwordConfirmation": registerData.confirmPassword,
-      "name": registerData.userName,
-      "phoneNumber": registerData.phone,
+      "passwordConfirmation": registerData.password,
+      "name": registerData.name,
+      "phoneNumber": registerData.phoneNumber,
     };
 
     final response = await client.post(
@@ -61,7 +66,35 @@ class AuthRemoteDataSourceImpl extends Api implements AuthRemoteDataSource {
     var responseJson = json.decode(response.body);
 
     if (response.statusCode == 201) {
-      return Future.value(responseJson['accessToken']);
+      AuthUser userModel = AuthUser.fromJson(responseJson);
+
+      return Future.value(userModel);
+    } else if (response.statusCode == 400) {
+      throw ValidateException(responseJson['message'][0]);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<UserModel> editUser(User editUser) async {
+    final body = {
+      "email": editUser.email,
+      "password": editUser.password,
+      "id": editUser.id,
+      "name": editUser.name,
+      "phone_number": editUser.phoneNumber,
+    };
+
+    final response = await client.put(
+        Uri.parse(Constants.URL + Constants.EditUser),
+        body: utf8.encode(json.encode(body)),
+        headers: await getHeaders());
+    var responseJson = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      UserModel userModel = UserModel.fromJson(responseJson);
+      return Future.value(userModel);
     } else if (response.statusCode == 400) {
       throw ValidateException(responseJson['message'][0]);
     } else {

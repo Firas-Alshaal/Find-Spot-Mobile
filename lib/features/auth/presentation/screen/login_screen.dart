@@ -11,7 +11,7 @@ import 'package:lost_find_tracker/features/auth/presentation/widget/curved-left-
 import 'package:lost_find_tracker/features/auth/presentation/widget/curved-left.dart';
 import 'package:lost_find_tracker/features/auth/presentation/widget/curved-right-shadow.dart';
 import 'package:lost_find_tracker/features/auth/presentation/widget/curved-right.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/error_snackbar.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/dialogWidget/error_snackbar.dart';
 import 'package:lost_find_tracker/injection_container.dart' as di;
 
 class LoginScreen extends StatefulWidget {

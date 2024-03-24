@@ -4,14 +4,13 @@ import 'package:lost_find_tracker/core/error/failures.dart';
 import 'package:lost_find_tracker/core/network/network_info.dart';
 import 'package:lost_find_tracker/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:lost_find_tracker/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:lost_find_tracker/features/auth/data/models/register_model.dart';
+import 'package:lost_find_tracker/features/auth/data/models/auth_model.dart';
 import 'package:lost_find_tracker/features/auth/data/models/user_model.dart';
-import 'package:lost_find_tracker/features/auth/domain/entities/register.dart';
 import 'package:lost_find_tracker/features/auth/domain/entities/user.dart';
 import 'package:lost_find_tracker/features/auth/domain/repositories/auth_repository.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/category.dart';
 
-typedef Future<String> LoginOrRegister();
+typedef Future<AuthUser> LoginOrRegister();
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
@@ -24,7 +23,7 @@ class AuthRepositoryImpl implements AuthRepository {
       required this.networkInfo});
 
   @override
-  Future<Either<Failure, String>> login(User loginData) async {
+  Future<Either<Failure, AuthUser>> login(User loginData) async {
     final UserModel loginModel =
         UserModel(email: loginData.email, password: loginData.password);
     return await _addAuth(() {
@@ -33,17 +32,32 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> register(Register registerData) async {
-    final RegisterModel registerModel = RegisterModel(
-      email: registerData.email,
-      password: registerData.password,
-      confirmPassword: registerData.confirmPassword,
-      phone: registerData.phone,
-      userName: registerData.userName,
-    );
+  Future<Either<Failure, AuthUser>> register(User registerData) async {
     return await _addAuth(() {
-      return remoteDataSource.register(registerModel);
+      return remoteDataSource.register(registerData);
     });
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> editUser(User editUser) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final user = await remoteDataSource.editUser(editUser);
+        localDataSource.saveUser(user);
+        return Right(user);
+      } on ServerException {
+        return Left(ServerFailure());
+      } on ValidateException catch (e) {
+        return Left(VerificationFailure(e.message));
+      }
+    } else {
+      try {
+        final user = await localDataSource.loadUser();
+        return Right(user);
+      } on EmptyCacheException {
+        return Left(EmptyCacheFailure());
+      }
+    }
   }
 
   @override
@@ -66,13 +80,14 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  Future<Either<Failure, String>> _addAuth(
+  Future<Either<Failure, AuthUser>> _addAuth(
       LoginOrRegister loginOrRegister) async {
     if (await networkInfo.isConnected) {
       try {
-        final token = await loginOrRegister();
-        localDataSource.cacheToken(token);
-        return Right(token);
+        final user = await loginOrRegister();
+        localDataSource.cacheToken(user.accessToken);
+        localDataSource.saveUser(user.user);
+        return Right(user);
       } on ValidateException catch (e) {
         return Left(VerificationFailure(e.message));
       } on ServerException {

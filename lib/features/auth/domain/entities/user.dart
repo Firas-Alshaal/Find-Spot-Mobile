@@ -6,12 +6,14 @@ class User with EquatableMixin {
     required this.password,
     this.phoneNumber,
     this.name,
+    this.id,
   });
 
   final String email;
   final String password;
   final String? phoneNumber;
   final String? name;
+  final String? id;
 
   @override
   List<Object?> get props => [
@@ -19,5 +21,6 @@ class User with EquatableMixin {
         password,
         phoneNumber,
         name,
+        id,
       ];
 }

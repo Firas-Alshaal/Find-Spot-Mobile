@@ -6,8 +6,8 @@ import 'package:lost_find_tracker/core/utils/assets.dart';
 import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/core/utils/theme_color.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/lostItem.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/app_bar_widget.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/pick_date.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/app_bar_widget.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/dialogWidget/pick_date.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ItemDetailsScreen extends StatelessWidget {

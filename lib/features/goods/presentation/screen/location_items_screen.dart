@@ -3,16 +3,16 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:lost_find_tracker/core/network/authrization.dart';
-import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/core/strings/failures.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/itemType.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/lostItem.dart';
 import 'package:lost_find_tracker/features/goods/presentation/bloc/goods/goods_bloc.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/error_snackbar.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/wait_location_items.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/dialogWidget/error_snackbar.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/wait_location_items.dart';
 import 'package:lost_find_tracker/injection_container.dart' as di;
 
 class LocationItemsScreen extends StatefulWidget {
@@ -119,16 +119,66 @@ class _LocationItemsScreenState extends State<LocationItemsScreen> {
                   onCameraMove: onCameraMove,
                 );
               }
-              return GoogleMap(
-                zoomControlsEnabled: true,
-                zoomGesturesEnabled: true,
-                mapType: MapType.normal,
-                mapToolbarEnabled: true,
-                markers: _markers,
-                onCameraMove: onCameraMove,
-                initialCameraPosition:
-                    CameraPosition(zoom: 4, target: _initialPosition),
-                onMapCreated: onCreated,
+              return Stack(
+                children: [
+                  GoogleMap(
+                    zoomControlsEnabled: true,
+                    zoomGesturesEnabled: true,
+                    mapType: MapType.normal,
+                    mapToolbarEnabled: true,
+                    markers: _markers,
+                    onCameraMove: onCameraMove,
+                    initialCameraPosition:
+                        CameraPosition(zoom: 4, target: _initialPosition),
+                    onMapCreated: onCreated,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    color: Colors.black.withOpacity(0.5),
+                    alignment: Alignment.bottomCenter,
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.location_on,
+                                size: 30,
+                                color: Colors.blueAccent,
+                              ),
+                              Text(
+                                'Lost',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 20, color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.location_on,
+                                size: 30,
+                                color: Colors.red,
+                              ),
+                              Text(
+                                'Found',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 20, color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               );
             },
           ),

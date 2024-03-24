@@ -17,12 +17,21 @@ class LoginEvent extends AuthEvent {
 }
 
 class RegisterEvent extends AuthEvent {
-  final Register register;
+  final User register;
 
   const RegisterEvent({required this.register});
 
   @override
   List<Object> get props => [register];
+}
+
+class EditUserEvent extends AuthEvent {
+  final User user;
+
+  const EditUserEvent({required this.user});
+
+  @override
+  List<Object> get props => [user];
 }
 
 class GetCategoriesEvent extends AuthEvent {
@@ -34,4 +43,3 @@ class CancelAuthEvent extends AuthEvent {
   @override
   List<Object> get props => [];
 }
-

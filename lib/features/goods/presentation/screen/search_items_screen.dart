@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_find_tracker/core/network/authrization.dart';
-import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/core/strings/failures.dart';
+import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/core/utils/theme_color.dart';
+import 'package:lost_find_tracker/features/goods/domain/entities/itemType.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/lostItem.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/search.dart';
 import 'package:lost_find_tracker/features/goods/presentation/bloc/goods/goods_bloc.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/app_bar_widget.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/empty_list.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/error_snackbar.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/lost_item.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/search_filter.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/app_bar_widget.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/empty_list.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/dialogWidget/error_snackbar.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/filter_search.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/itemWidget/lost_item.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/search_filter.dart';
 import 'package:lost_find_tracker/injection_container.dart' as di;
 
 class SearchItemsScreen extends StatefulWidget {
@@ -28,6 +30,10 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
   final _scrollController = ScrollController();
 
   late GoodsBloc _goodsBloc;
+
+  bool isInit = false;
+
+  ItemType selectedButton = ItemType.BOTH;
 
   @override
   void initState() {
@@ -79,31 +85,135 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
             },
             builder: (context, state) {
               if (state is LoadingGoodsState) {
+                isInit = false;
                 return Center(
                     child: CircularProgressIndicator(
                         color: ColorsFave.primaryColor));
               } else if (state is GetLostItemsSuccessState) {
-                searchList = state.items;
+                if (!isInit) {
+                  searchList = selectedButton == ItemType.BOTH
+                      ? state.items.reversed.toList()
+                      : selectedButton == ItemType.LOST
+                          ? state.items.reversed
+                              .where((element) => element.isLost == true)
+                              .toList()
+                          : state.items.reversed
+                              .where((element) => element.isLost == false)
+                              .toList();
+                  isInit = true;
+                }
+
                 return searchList.isEmpty
-                    ? const EmptyListWidget()
-                    : Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ListView.builder(
-                          key: const ValueKey('lost_page_list_key'),
-                          controller: _scrollController,
-                          itemCount: searchList.length,
-                          itemBuilder: (context, index) {
-                            final item = searchList[index];
-                            return LostListItem(
-                                key: ValueKey(item.id),
-                                lostItem: item,
-                                onTap: (item) {
-                                  Navigator.pushNamed(
-                                      context, Constants.ItemDetailsScreen,
-                                      arguments: item);
-                                });
-                          },
-                        ),
+                    ? Column(
+                        children: [
+                          Row(
+                            children: [
+                              FilterButton(
+                                buttonType: ItemType.BOTH,
+                                selectedButton: selectedButton,
+                                onTap: () {
+                                  setState(() {
+                                    searchList = state.items.reversed.toList();
+                                    selectedButton = ItemType.BOTH;
+                                  });
+                                },
+                              ),
+                              FilterButton(
+                                buttonType: ItemType.LOST,
+                                selectedButton: selectedButton,
+                                onTap: () {
+                                  setState(() {
+                                    searchList = state.items.reversed
+                                        .where(
+                                            (element) => element.isLost == true)
+                                        .toList();
+                                    selectedButton = ItemType.LOST;
+                                  });
+                                },
+                              ),
+                              FilterButton(
+                                buttonType: ItemType.FOUND,
+                                selectedButton: selectedButton,
+                                onTap: () {
+                                  setState(() {
+                                    searchList = state.items.reversed
+                                        .where((element) =>
+                                            element.isLost == false)
+                                        .toList();
+                                    selectedButton = ItemType.FOUND;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          const Expanded(child: EmptyListWidget()),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          Row(
+                            children: [
+                              FilterButton(
+                                buttonType: ItemType.BOTH,
+                                selectedButton: selectedButton,
+                                onTap: () {
+                                  setState(() {
+                                    searchList = state.items.reversed.toList();
+                                    selectedButton = ItemType.BOTH;
+                                  });
+                                },
+                              ),
+                              FilterButton(
+                                buttonType: ItemType.LOST,
+                                selectedButton: selectedButton,
+                                onTap: () {
+                                  setState(() {
+                                    searchList = state.items.reversed
+                                        .where(
+                                            (element) => element.isLost == true)
+                                        .toList();
+                                    selectedButton = ItemType.LOST;
+                                  });
+                                },
+                              ),
+                              FilterButton(
+                                buttonType: ItemType.FOUND,
+                                selectedButton: selectedButton,
+                                onTap: () {
+                                  setState(() {
+                                    searchList = state.items.reversed
+                                        .where((element) =>
+                                            element.isLost == false)
+                                        .toList();
+                                    selectedButton = ItemType.FOUND;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: ListView.builder(
+                                key: const ValueKey('lost_page_list_key'),
+                                controller: _scrollController,
+                                itemCount: searchList.length,
+                                itemBuilder: (context, index) {
+                                  var item = searchList[index];
+
+                                  return LostListItem(
+                                      key: ValueKey(item.id),
+                                      lostItem: item,
+                                      onTap: (item) {
+                                        Navigator.pushNamed(context,
+                                            Constants.ItemDetailsScreen,
+                                            arguments: item);
+                                      });
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       );
               }
               return Center(

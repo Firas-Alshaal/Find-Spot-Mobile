@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void logout(BuildContext context) async {
   final SharedPreferences sharedPreferences = di.sl<SharedPreferences>();
   await sharedPreferences.remove(Constants.TOKEN);
+  await sharedPreferences.remove(Constants.User);
   if (!context.mounted) return;
   Navigator.pushNamedAndRemoveUntil(
     context,

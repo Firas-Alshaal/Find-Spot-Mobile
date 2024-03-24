@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/lostItem.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/item_description.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/item_photo.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/itemWidget/item_description.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/itemWidget/item_photo.dart';
 
 typedef OnLostListItemTap = void Function(LostItem lostItem);
 

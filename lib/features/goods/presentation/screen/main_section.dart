@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/homeItem.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/home_page_item.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/itemWidget/home_page_item.dart';
 
 class GridDashboard extends StatelessWidget {
   GridDashboard({super.key});
 
   Items item1 = Items(
-      title: "Lost Items",
+      title: "My Lost Items",
       subtitle: "You lost things!\nAdd it",
       img: "assets/images/calendar.png",
       route: Constants.LostItemScreen);
   Items item2 = Items(
-      title: "Found Items",
+      title: "My Found Items",
       subtitle: "You found things!\nAdd it",
       img: "assets/images/food.png",
       route: Constants.FoundItemScreen);
@@ -27,13 +27,13 @@ class GridDashboard extends StatelessWidget {
       img: "assets/images/festival.png",
       route: Constants.AddLostScreen);
   Items item5 = Items(
-      title: "Locations",
+      title: "Items Location",
       subtitle: "Check what you lost and found",
       img: "assets/images/map.png",
       route: Constants.LocationScreen);
   Items item6 = Items(
       title: "Search Item",
-      subtitle: "search specific item you need",
+      subtitle: "Search lost and found items",
       img: "assets/images/setting.png",
       route: Constants.SearchScreen);
 

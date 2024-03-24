@@ -6,6 +6,7 @@ import 'package:lost_find_tracker/features/auth/data/datasources/auth_remote_dat
 import 'package:lost_find_tracker/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:lost_find_tracker/features/auth/domain/repositories/auth_repository.dart';
 import 'package:lost_find_tracker/features/auth/domain/usecases/category.dart';
+import 'package:lost_find_tracker/features/auth/domain/usecases/edit_user.dart';
 import 'package:lost_find_tracker/features/auth/domain/usecases/login.dart';
 import 'package:lost_find_tracker/features/auth/domain/usecases/register.dart';
 import 'package:lost_find_tracker/features/auth/presentation/bloc/auth/auth_bloc.dart';
@@ -31,7 +32,10 @@ Future<void> init() async {
 // Bloc
 
   sl.registerFactory(() => AuthBloc(
-      loginUseCase: sl(), registerUseCase: sl(), categoryUseCase: sl()));
+      loginUseCase: sl(),
+      registerUseCase: sl(),
+      categoryUseCase: sl(),
+      editUserUseCase: sl()));
   sl.registerFactory(() => GoodsBloc(
       getLostItemUseCase: sl(),
       lostItemUseCase: sl(),
@@ -42,6 +46,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => LoginUseCase(sl()));
   sl.registerLazySingleton(() => RegisterUseCase(sl()));
+  sl.registerLazySingleton(() => EditUserUseCase(sl()));
   sl.registerLazySingleton(() => CategoryUseCase(sl()));
   sl.registerLazySingleton(() => LostItemUseCase(sl()));
   sl.registerLazySingleton(() => GetLostItemUseCase(sl()));

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lost_find_tracker/core/utils/theme_color.dart';
 
 class TextFieldItem extends StatelessWidget {
@@ -9,6 +10,8 @@ class TextFieldItem extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final IconData icon;
   final bool? readOnly;
+  final bool? isPassword;
+  final List<TextInputFormatter>? textInputFormatter;
 
   const TextFieldItem(
       {Key? key,
@@ -16,6 +19,8 @@ class TextFieldItem extends StatelessWidget {
       required this.icon,
       this.onTap,
       this.readOnly,
+      this.isPassword,
+      this.textInputFormatter,
       required this.labelText,
       required this.textInputType,
       this.validator})
@@ -29,6 +34,8 @@ class TextFieldItem extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
         keyboardType: textInputType,
+        inputFormatters: textInputFormatter,
+        obscureText: isPassword == null ? false : isPassword!,
         readOnly: readOnly == null ? false : readOnly!,
         onTap: onTap,
         validator: validator,

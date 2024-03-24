@@ -5,14 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/core/utils/dismiss_keyboard.dart';
 import 'package:lost_find_tracker/core/utils/theme_color.dart';
-import 'package:lost_find_tracker/features/auth/domain/entities/register.dart';
+import 'package:lost_find_tracker/features/auth/domain/entities/user.dart';
 import 'package:lost_find_tracker/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:lost_find_tracker/features/auth/presentation/widget/auth_field.dart';
 import 'package:lost_find_tracker/features/auth/presentation/widget/curved-left-shadow.dart';
 import 'package:lost_find_tracker/features/auth/presentation/widget/curved-left.dart';
 import 'package:lost_find_tracker/features/auth/presentation/widget/curved-right-shadow.dart';
 import 'package:lost_find_tracker/features/auth/presentation/widget/curved-right.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/error_snackbar.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/dialogWidget/error_snackbar.dart';
 import 'package:lost_find_tracker/injection_container.dart' as di;
 
 class RegisterScreen extends StatefulWidget {
@@ -230,13 +230,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           GestureDetector(
                             onTap: () {
                               if (_formKey.currentState!.validate()) {
-                                Register register = Register(
+                                User register = User(
                                     email: _emailController.text.trim(),
                                     password: _passwordController.text.trim(),
-                                    confirmPassword:
-                                        _confirmPasswordController.text.trim(),
-                                    phone: _phoneController.text.trim(),
-                                    userName: _userNameController.text.trim());
+                                    phoneNumber: _phoneController.text.trim(),
+                                    name: _userNameController.text.trim());
                                 _authBloc
                                     .add(RegisterEvent(register: register));
                               } else {

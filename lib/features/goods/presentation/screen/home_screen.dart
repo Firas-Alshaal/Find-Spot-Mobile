@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_find_tracker/core/network/authrization.dart';
+import 'package:lost_find_tracker/core/utils/constant.dart';
 import 'package:lost_find_tracker/core/utils/theme_color.dart';
 import 'package:lost_find_tracker/features/goods/presentation/screen/main_section.dart';
 
@@ -23,6 +24,12 @@ class HomeScreen extends StatelessWidget {
             ),
           ).animate().fadeIn(delay: .3.seconds, duration: .2.seconds),
           actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Constants.EditUserScreen);
+              },
+              icon: const Icon(Icons.account_circle),
+            ),
             IconButton(
               onPressed: () {
                 logout(context);

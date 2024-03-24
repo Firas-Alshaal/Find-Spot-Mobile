@@ -18,8 +18,9 @@ class AddGoodsSuccessState extends GoodsState {
 
 class GetLostItemsSuccessState extends GoodsState {
   final List<LostItem> items;
+  final String? userId;
 
-  const GetLostItemsSuccessState({required this.items});
+  const GetLostItemsSuccessState({required this.items, this.userId});
 
   @override
   List<Object> get props => [];

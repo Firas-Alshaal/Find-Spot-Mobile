@@ -4,9 +4,9 @@ import 'package:lost_find_tracker/core/utils/theme_color.dart';
 import 'package:lost_find_tracker/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/category.dart';
 import 'package:lost_find_tracker/features/goods/domain/entities/search.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/dropdown_field.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/pick_date.dart';
-import 'package:lost_find_tracker/features/goods/presentation/widget/text_field_item.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/materialWidget/dropdown_field.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/dialogWidget/pick_date.dart';
+import 'package:lost_find_tracker/features/goods/presentation/widget/itemWidget/text_field_item.dart';
 import 'package:lost_find_tracker/injection_container.dart' as di;
 
 class SearchFilterDialog extends StatelessWidget {

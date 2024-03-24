@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lost_find_tracker/core/utils/constant.dart';
+import 'package:lost_find_tracker/features/auth/presentation/screen/edit_profile_screen.dart';
 import 'package:lost_find_tracker/features/auth/presentation/screen/intro_screen.dart';
 import 'package:lost_find_tracker/features/auth/presentation/screen/login_screen.dart';
 import 'package:lost_find_tracker/features/auth/presentation/screen/register_screen.dart';
@@ -28,6 +29,7 @@ class Routes {
   static const _location = LocationItemsScreen();
   static const _details = ItemDetailsScreen();
   static final _putLocation = PutLocationScreen();
+  static const _editUser = EditUserScreen();
 
   static final routes = <String, WidgetBuilder>{
     Constants.SPLASH: (BuildContext context) => _splash,
@@ -43,5 +45,6 @@ class Routes {
     Constants.LocationScreen: (BuildContext context) => _location,
     Constants.ItemDetailsScreen: (BuildContext context) => _details,
     Constants.PutLocationScreen: (BuildContext context) => _putLocation,
+    Constants.EditUserScreen: (BuildContext context) => _editUser,
   };
 }
